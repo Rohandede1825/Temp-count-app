@@ -1,7 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom"
 
 const Login = () => {
+    const naviate = useNavigate();
+   
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    
+    
+
+    const handleSubmit = async(event) => {
+        event.preventDefault();
+        setLoading(true);
+        setError(null)
+
+        // Handle form submission
+        try {
+            const response = await fetch('http://localhost:3000/api/user/login',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: event.target.email.value,
+                    password: event.target.password.value
+                })
+            })
+            const data = await response.json();
+            if(!response.ok){
+                setError(data.message || 'Login failed');
+                return;
+            }
+            alert('login succesfull')
+            naviate('/')
+            setError(null);
+        } catch (error) {
+            setLoading(false);
+        }
+    }
   
 
   const handleSignupRedirect = () => {
@@ -9,12 +47,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-emerald-600 to-emerald-500">
-      <div className="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-500 hover:scale-105">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r bg-gray-200">
+      <div className="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-500 hover:scale-105 text-black">
         <h1 className="text-3xl font-bold text-emerald-600 mb-6 text-center">
           Login
         </h1>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -55,12 +93,11 @@ const Login = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Don't have an account?{" "}
-            <button
-              onClick={handleSignupRedirect}
-              className="text-emerald-600 hover:text-emerald-700 font-semibold"
-            >
-              Create an account
-            </button>
+           
+            <Link  onClick={handleSignupRedirect}
+              className="text-emerald-600 hover:text-emerald-700 font-semibold" to='/Signup'>
+            Create an account
+            </Link>
           </p>
         </div>
       </div>

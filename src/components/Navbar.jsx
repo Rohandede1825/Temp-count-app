@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 const Navbar = () => {
@@ -11,11 +12,30 @@ const Navbar = () => {
                     Logo
                 </div>
                 <div className='hidden sm:block'>
-                <ul className='flex gap-4 mx-auto justify-center items-center w-full'>
+                {/* <ul className='flex gap-4 mx-auto justify-center items-center w-full'>
                     <li className='font-semi-bold hover:opacity-90 cursor-pointer'>Home</li>
                     <li className='font-semi-bold hover:opacity-90 cursor-pointer'>About</li>
                     <li className='font-semi-bold hover:opacity-90 cursor-pointer'>Services</li>
                     <li className='font-semi-bold hover:opacity-90 cursor-pointer'>Contact</li>
+                </ul> */}
+
+                <ul className='flex gap-4 mx-auto justify-center items-center w-full'>
+                    <li>
+                        <Link to="/" className="text-white hover:text-emerald-200">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/about" className="text-white hover:text-emerald-200">
+                            About
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Login" className="text-white hover:text-emerald-200">
+                            Login
+                        </Link>
+                    </li>
+
                 </ul>
                 </div>
                

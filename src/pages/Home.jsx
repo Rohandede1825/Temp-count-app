@@ -1,24 +1,144 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const Home = () => {
+  const [temperature, setTemperature] = useState('');
+  const [history, setHistory] = useState([]);
+  const [tempLimit, setTempLimit] = useState('');
 
-  function change (){
-    alert('hello')
-    
-  }
+  // Fetch latest temperature
+  const fetchTemperature = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/temp/getTempreature');
+      const data = await response.json();
+      if (response.ok) {
+        setTemperature(data.temperature);
+        setTempLimit(data.tempLimit);
+      }
+    } catch (error) {
+      console.error('Error fetching temperature:', error);
+    }
+  };
+
+  // Fetch temperature history
+  const fetchTemperatureHistory = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/temp/getTempretureHistory');
+      const data = await response.json();
+      if (response.ok) {
+        setHistory(data.map((entry) => entry.temperature));
+      }
+    } catch (error) {
+      console.error('Error fetching temperature history:', error);
+    }
+  };
+
+  // Handle input change
+  const handleChange = (e) => {
+    setTemperature(e.target.value);
+  };
+
+  // Handle form submit (send new temperature to backend)
+  const handleSubmit = async () => {
+    if (!temperature || !tempLimit) {
+      alert('Please enter both temperature and temperature limit.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/temp/addTemp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ temperature, tempLimit })
+      });
+
+      if (response.ok) {
+        fetchTemperature();
+        fetchTemperatureHistory();
+        setTemperature('');
+      }
+    } catch (error) {
+      console.error('Error saving temperature:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTemperature();
+    fetchTemperatureHistory();
+  }, []);
+
   return (
-    <>
+    <div className='flex flex-col items-center justify-center h-screen bg-gradient-to-r bg-gray-200 p-5'>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className='bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center'
+      >
+        <h1 className='text-2xl font-bold mb-4 text-emerald-800'>Live Temperature Input</h1>
+        <input
+          type='number'
+          value={temperature}
+          onChange={handleChange}
+          placeholder='Enter Temperature'
+          className='border border-gray-300 p-2 rounded w-full mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-black'
+        />
+        <input
+          type='number'
+          value={tempLimit}
+          onChange={(e) => setTempLimit(e.target.value)}
+          placeholder='Enter Temperature Limit'
+          className='border border-gray-300 p-2 rounded w-full mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-black'
+        />
+        <button
+          onClick={handleSubmit}
+          className='bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-300'
+        >
+          Save Temperature
+        </button>
+      </motion.div>
 
-        <div className='flex justify-center items-center h-screen bg-gray-200'>
-            <div className='bg-white p-8 rounded-lg shadow-lg'>
-                <h1 className='text-4xl font-bold mb-4 text-black'>Welcome to the Home Page</h1>
-                <p className='text-gray-600'>This is the home page of the website. You can find all the information you need here.</p>
-            </div>
+      {/* Live Temperature Display */}
+      {temperature && (
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='mt-6 p-6 bg-white shadow-lg rounded-lg text-center w-full max-w-md'
+        >
+          <h2 className='text-lg font-semibold text-emerald-700'>Current Temperature:</h2>
+          <p className='text-3xl font-bold text-emerald-600'>{temperature}°C</p>
+        </motion.div>
+      )}
 
-            <button onClick={change} className='text-black bg-emerald-600 p-3 border rounded-lg ml-3 '>click</button>
-        </div>
-    </>
-  )
-}
+      {/* Temperature History */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className='mt-6 p-6 bg-white shadow-lg rounded-lg w-full max-w-md'
+      >
+        <h2 className='text-lg font-semibold text-emerald-700 text-center'>Temperature History</h2>
+        <ul className='mt-4 space-y-2'>
+          {history.length === 0 ? (
+            <p className='text-gray-500 text-center'>No previous values.</p>
+          ) : (
+            history.map((temp, index) => (
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className='p-2 bg-emerald-100 rounded shadow-sm text-center text-emerald-700'
+              >
+                {temp}°C
+              </motion.li>
+            ))
+          )}
+        </ul>
+      </motion.div>
+    </div>
+  );
+};
 
-export default Home
+export default Home;
