@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
         <div>
-           <nav className='bg-emerald-500  justify-between items-center '>
+           <nav className='bg-emerald-500  justify-between items-center  '>
             <div className='flex justify-between items-center bg-emerald-500 p-4'>
                 <div  className='font-bold text-white text-2xl'>
                     Logo
