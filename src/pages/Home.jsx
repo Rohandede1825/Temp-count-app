@@ -45,9 +45,9 @@ const Home = () => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center  bg-gray-200 p-5  '>
+    <div className='flex flex-col items-center justify-center bg-gray-200 p-5'>
       <motion.div className='bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center'>
-        <h1 className='text-2xl font-bold mb-4 text-emerald-800'>Live Temperature Input</h1>
+        <h1 className='text-2xl font-bold mb-4 text-gray-800'>Live Temperature Input</h1>
         <form onSubmit={handleSubmit} className='text-black font-semibold'>
           <input
             type='number'
@@ -63,7 +63,7 @@ const Home = () => {
             placeholder='Set Temperature Limit'
             className='border border-gray-300 p-2 rounded w-full mb-4'
           />
-          <button type='submit' className='bg-emerald-600 text-white px-4 py-2 rounded-lg'>
+          <button type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
             Add Temperature
           </button>
         </form>
@@ -76,20 +76,19 @@ const Home = () => {
         </motion.div>
       )}
 
-      <motion.div className='mt-6 p-6 bg-white shadow-lg rounded-lg w-full max-w-md h-80 overflow-auto scroll-smooth overflow-'>
-        <h2 className='text-2xl font-bold text-emerald-700 text-center'>Temperature History</h2>
+      <motion.div className='mt-6 p-6 bg-white shadow-lg rounded-lg w-full max-w-md h-80 overflow-auto scroll-smooth'>
+        <h2 className='text-2xl font-bold text-gray-800 text-center'>Temperature History</h2>
         <ul className='mt-4 space-y-2'>
-          {history.length ===0 ? (
+          {history.length === 0 ? (
             <p className='text-gray-500 text-center'>No previous values.</p>
           ) : (
             history.map((entry, index) => (
-              <motion.li key={index} className={` text-bold p-2 rounded shadow-sm text-center ${entry.temperature > tempLimit ? 'bg-red-400' : 'bg-green-400'}`}>
+              <motion.li key={index} className={`text-bold p-2 rounded shadow-sm text-center ${entry.temperature > tempLimit ? 'bg-red-400' : 'bg-green-400'}`}>
                 {entry.temperature}°C
               </motion.li>
             ))
           )}
         </ul>
-
       </motion.div>
     </div>
   );

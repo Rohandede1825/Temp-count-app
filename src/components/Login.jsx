@@ -49,7 +49,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r bg-gray-200">
       <div className="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-500 hover:scale-105 text-black">
-        <h1 className="text-3xl font-bold text-emerald-600 mb-6 text-center">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Login
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -85,7 +85,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+            className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
           >
             Login
           </button>
@@ -95,7 +95,7 @@ const Login = () => {
             Don't have an account?{" "}
            
             <Link  onClick={handleSignupRedirect}
-              className="text-emerald-600 hover:text-emerald-700 font-semibold" to='/Signup'>
+              className="text-gray-800 hover:text-gray-700 font-semibold" to='/Signup'>
             Create an account
             </Link>
           </p>

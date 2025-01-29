@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -35,72 +36,107 @@ const Signup = () => {
         throw new Error(data.message || "Signup failed");
       }
 
+      notifySuccess();
       alert("Signup successful! Redirecting to login...");
       navigate("/login");
 
     } catch (error) {
+      notifyError();
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
+  const notifySuccess = () => {
+    toast.success('Account Created Successfully!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notifyError = () => {
+    toast.error("Signup failed", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-emerald-600">
-          Signup
-        </h2>
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-300">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Signup</h2>
+
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
         <form onSubmit={handleSubmit}>
-          <div className="mb-4 text-black">
-            <label className="block text-sm font-medium text-gray-700">Name</label>
+          <div className="mb-4 text-gray-800">
+            <label className="block text-sm font-medium">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white text-gray-800"
               required
             />
           </div>
-          <div className="mb-4 text-black">
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+
+          <div className="mb-4 text-gray-800">
+            <label className="block text-sm font-medium">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white text-gray-800"
               required
             />
           </div>
-          <div className="mb-6 text-black">
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+
+          <div className="mb-6 text-gray-800">
+            <label className="block text-sm font-medium">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white text-gray-800"
               required
             />
           </div>
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+            className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
           >
             {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
+
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-emerald-600 hover:opacity-90 font-bold">
+          <Link to="/login" className="text-gray-700 hover:opacity-90 font-bold">
             Log in
           </Link>
         </p>
       </div>
+
+      {/* Toast Notification Container */}
+      <ToastContainer />
     </div>
   );
 };

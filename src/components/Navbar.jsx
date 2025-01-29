@@ -1,57 +1,106 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { IoNotifications } from "react-icons/io5";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoClose } from "react-icons/io5";
 
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleClose=()=>{
+    setIsMenuOpen(false);
+  }
+
+
+  const handleClickOutside = (e) => {
+    if (!e.target.closest('.MenuOption') && !e.target.closest('.menu-icon')) {
+      setIsMenuOpen(false); // Hide the menu if clicking outside
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+
   return (
-    <>
-        <div>
-           <nav className='bg-emerald-500  justify-between items-center  '>
-            <div className='flex justify-between items-center bg-emerald-500 p-4'>
-                <div  className='font-bold text-white text-2xl'>
-                    Logo
-                </div>
-                <div className='hidden sm:block'>
-                {/* <ul className='flex gap-4 mx-auto justify-center items-center w-full'>
-                    <li className='font-semi-bold hover:opacity-90 cursor-pointer'>Home</li>
-                    <li className='font-semi-bold hover:opacity-90 cursor-pointer'>About</li>
-                    <li className='font-semi-bold hover:opacity-90 cursor-pointer'>Services</li>
-                    <li className='font-semi-bold hover:opacity-90 cursor-pointer'>Contact</li>
-                </ul> */}
+    <div>
+      <nav className='bg-gray-900 text-white shadow-lg'>
+        <div className='flex justify-between items-center p-4'>
+          <div>
+            <Link to={'/'}>
+              <img className='h-9 sm:h-12' src="https://www.nvsubpower.com/images/logo-nv.png" alt="Logo" />
+            </Link>
+          </div>
 
-                <ul className='flex gap-4 mx-auto justify-center items-center w-full'>
-                    <li>
-                        <Link to="/" className="text-white hover:text-emerald-200">
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/about" className="text-white hover:text-emerald-200">
-                            About
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/Login" className="text-white hover:text-emerald-200">
-                            Login
-                        </Link>
-                    </li>
+          <div onClick={toggleMenu} className='menu-icon  sm:hidden'>
+            <GiHamburgerMenu  className='text-3xl cursor-pointer' />
+          </div>
 
-                </ul>
-                </div>
-               
-                <div className='flex gap-4 items-center justify-between'>
-                    <div>
-                        icon
-                    </div>
-                    <div className=''>
-                        <img className='h-10 w-10 md:h-10 rounded-full ' src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZW1wbG95ZWV8ZW58MHx8MHx8fDA%3D" alt="img" />
-                    </div>
-                </div>
+          <div className='MenuOption hidden sm:block'>
+            <ul className='flex gap-6 items-center'>
+              <li>
+                <Link to="/" className="text-white hover:text-gray-400 transition duration-300">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-white hover:text-gray-400 transition duration-300">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="text-white hover:text-gray-400 transition duration-300">
+                  Login
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className='flex gap-4 items-center'>
+            <div className='text-white'>
+              <IoNotifications className='text-2xl hover:text-gray-400 transition duration-300'/>
             </div>
-           </nav>
+            <div className=''>
+              <img className='h-10 w-10 rounded-full' src="https://www.corporatephotographylondon.com/wp-content/uploads/2019/11/HKstrategies-755-1-1024x683.jpg" alt="Profile" />
+            </div>
+          </div>
         </div>
-    </>
-  )
-}
 
-export default Navbar
+        {/* Mobile menu */}
+        <div className={`sm:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-gray-800 p-4 `}>
+          <span onClick={handleClose} className='font-bold text-2xl cursor-pointer block  ml-72'><IoClose /></span>
+
+          <ul className='font-bold'>
+            <li>
+              <Link to="/" className="block text-white py-2 hover:text-gray-400 transition duration-300">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="block text-white py-2 hover:text-gray-400 transition duration-300">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="block text-white py-2 hover:text-gray-400 transition duration-300">
+                Login
+              </Link>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+    </div>
+  );
+};
+
+export default Navbar;
