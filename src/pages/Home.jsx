@@ -26,7 +26,7 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/temp/add', {
+      const response = await fetch(`${process.env.URL}/api/temp/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
