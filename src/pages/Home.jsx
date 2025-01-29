@@ -4,32 +4,20 @@ import { motion } from 'framer-motion';
 const Home = () => {
   const [temperature, setTemperature] = useState('');
   const [history, setHistory] = useState([]);
-  const [tempLimit, setTempLimit] = useState('');
+  const [tempLimit, setTempLimit] = useState(30); // Default to 30°C
 
-  // Fetch latest temperature
+  // Fetch latest temperature and limit
   const fetchTemperature = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/temp/getTempreature');
+      const response = await fetch('http://localhost:3000/api/temp/getTemperature');
       const data = await response.json();
       if (response.ok) {
         setTemperature(data.temperature);
         setTempLimit(data.tempLimit);
+        setHistory(data.history.map(entry => entry.temperature)); // Update history
       }
     } catch (error) {
       console.error('Error fetching temperature:', error);
-    }
-  };
-
-  // Fetch temperature history
-  const fetchTemperatureHistory = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/api/temp/getTempretureHistory');
-      const data = await response.json();
-      if (response.ok) {
-        setHistory(data.map((entry) => entry.temperature));
-      }
-    } catch (error) {
-      console.error('Error fetching temperature history:', error);
     }
   };
 
@@ -40,13 +28,13 @@ const Home = () => {
 
   // Handle form submit (send new temperature to backend)
   const handleSubmit = async () => {
-    if (!temperature || !tempLimit) {
-      alert('Please enter both temperature and temperature limit.');
+    if (!temperature) {
+      alert('Please enter a temperature.');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/temp/addTemp', {
+      const response = await fetch('http://localhost:3000/api/temp/addTemperature', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
@@ -54,7 +42,6 @@ const Home = () => {
 
       if (response.ok) {
         fetchTemperature();
-        fetchTemperatureHistory();
         setTemperature('');
       }
     } catch (error) {
@@ -64,7 +51,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchTemperature();
-    fetchTemperatureHistory();
+    const interval = setInterval(fetchTemperature, 5000); // Auto-refresh every 5 seconds
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -83,13 +71,6 @@ const Home = () => {
           placeholder='Enter Temperature'
           className='border border-gray-300 p-2 rounded w-full mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-black'
         />
-        <input
-          type='number'
-          value={tempLimit}
-          onChange={(e) => setTempLimit(e.target.value)}
-          placeholder='Enter Temperature Limit'
-          className='border border-gray-300 p-2 rounded w-full mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-black'
-        />
         <button
           onClick={handleSubmit}
           className='bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition duration-300'
@@ -104,10 +85,12 @@ const Home = () => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className='mt-6 p-6 bg-white shadow-lg rounded-lg text-center w-full max-w-md'
+          className={`mt-6 p-6 shadow-lg rounded-lg text-center w-full max-w-md ${
+            temperature > tempLimit ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+          }`}
         >
-          <h2 className='text-lg font-semibold text-emerald-700'>Current Temperature:</h2>
-          <p className='text-3xl font-bold text-emerald-600'>{temperature}°C</p>
+          <h2 className='text-lg font-semibold'>Current Temperature:</h2>
+          <p className='text-3xl font-bold'>{temperature}°C</p>
         </motion.div>
       )}
 
@@ -129,7 +112,9 @@ const Home = () => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className='p-2 bg-emerald-100 rounded shadow-sm text-center text-emerald-700'
+                className={`p-2 rounded shadow-sm text-center ${
+                  temp > tempLimit ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'
+                }`}
               >
                 {temp}°C
               </motion.li>
