@@ -40,9 +40,9 @@ const Signup = () => {
         throw new Error(errorData.message || "Signup failed due to server issue");
       }
   
-      notifySuccess();
-      alert("Signup successful! Redirecting to login...");
+      // alert("Signup successful! Redirecting to login...");
       navigate("/login");
+      notifySuccess();
   
     } catch (error) {
       notifyError();
