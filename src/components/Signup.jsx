@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import { configDotenv } from "dotenv";
+import { ToastContainer, toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,24 +12,32 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/user/signup`, {
+      const backendUrl = process.env.REACT_APP_PUBLIC_API; // Ensure this is set in .env
+      console.log("Backend URL:", backendUrl);
+
+      if (!backendUrl) {
+        throw new Error("Backend URL is not defined. Check your .env file.");
+      }
+
+      const response = await fetch(`${backendUrl}/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      
 
       const data = await response.json();
 
@@ -45,13 +52,15 @@ const Signup = () => {
     } catch (error) {
       notifyError();
       setError(error.message);
+      console.error("Signup Error:", error.message);
     } finally {
       setLoading(false);
     }
   };
 
+  // Success notification
   const notifySuccess = () => {
-    toast.success('Account Created Successfully!', {
+    toast.success("Account Created Successfully!", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -63,6 +72,7 @@ const Signup = () => {
     });
   };
 
+  // Error notification
   const notifyError = () => {
     toast.error("Signup failed", {
       position: "top-center",

@@ -44,7 +44,7 @@ const Home = () => {
         body: JSON.stringify({ temperature, tempLimit })
 
       })
-      
+
       if (response.ok) {
         const data = await response.json();
         setCurrentTemp(data.temperature);
