@@ -7,7 +7,7 @@ const Home = () => {
   const [tempLimit, setTempLimit] = useState(30);
   const [currentTemp, setCurrentTemp] = useState(null);
   const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(false);
+  
 
   // Handle input change
   const handleChange = (e) => {
