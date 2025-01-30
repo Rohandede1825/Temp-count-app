@@ -40,9 +40,9 @@ const Signup = () => {
         throw new Error(errorData.message || "Signup failed due to server issue");
       }
   
-      // alert("Signup successful! Redirecting to login...");
-      navigate("/login");
+      alert("Signup successful! Redirecting to login...");
       notifySuccess();
+      navigate("/login");
   
     } catch (error) {
       notifyError();
@@ -56,10 +56,10 @@ const Signup = () => {
   // Success notification
   const notifySuccess = () => {
     toast.success("Account Created Successfully!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
-      closeOnClick: false,
+      closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,

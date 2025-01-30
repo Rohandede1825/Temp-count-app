@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom"
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -42,7 +43,7 @@ const Login = () => {
                 setError(data.message || 'Login failed');
                 return;
             }
-            // alert('login succesfull')
+            alert('login succesfull')
 
             notifySuccess();
             naviate('/')
