@@ -24,20 +24,21 @@ const Signup = () => {
     setError(null);
 
     try {
-      const backendUrl = process.env.PUBLIC_API; // Ensure this is set in .env
-      console.log("Backend URL:", backendUrl);
+      const backendUrl = process.env.REACT_APP_PUBLIC_API;
 
-      if (!backendUrl) {
-        throw new Error("Backend URL is not defined. Check your .env file.");
-      }
+        if (!backendUrl) {
+          console.error("Backend URL is not defined. Check your .env file.");
+          return;
+        }
 
-      const response = await fetch(`${backendUrl}/api/user/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        console.log("Backend URL:", backendUrl); // Debugging
+
+        const response = await fetch(`${backendUrl}/api/user/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
 
       const data = await response.json();
 
