@@ -8,6 +8,11 @@ const Login = () => {
    
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+      });
 
     
     const handleSubmit = async(event) => {
@@ -32,6 +37,7 @@ const Login = () => {
             })
             
             const data = await response.json();
+
             if(!response.ok){
                 setError(data.message || 'Login failed');
                 return;
@@ -46,7 +52,7 @@ const Login = () => {
   
 
   const handleSignupRedirect = () => {
-    navigate("/signup"); // Redirect to the signup page
+    naviate("/signup"); // Redirect to the signup page
   };
 
   return (
