@@ -24,13 +24,14 @@ const Signup = () => {
     setError(null);
 
     try {
-     
-
-        const response = await fetch(`https://temp-app-backend.onrender.com/api/user/signup`, {
+        const response = await fetch('https://temp-app-backend.onrender.com/api/user/signup', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
+
+        console.log(response);
+        
 
 
       const data = await response.json();
