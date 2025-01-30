@@ -22,28 +22,28 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+  
     try {
-        const response = await fetch('https://temp-app-backend.onrender.com/api/user/signup', {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-
-        console.log(response);
-        
-
-
-      const data = await response.json();
-
+      const backendUrl = "https://temp-app-backend.onrender.com/api/user/signup";
+  
+      const response = await fetch(backendUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      // Check response status
       if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Signup failed due to server issue");
       }
-
+  
       notifySuccess();
       alert("Signup successful! Redirecting to login...");
       navigate("/login");
-
+  
     } catch (error) {
       notifyError();
       setError(error.message);
@@ -52,7 +52,7 @@ const Signup = () => {
       setLoading(false);
     }
   };
-
+  
   // Success notification
   const notifySuccess = () => {
     toast.success("Account Created Successfully!", {
