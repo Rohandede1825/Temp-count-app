@@ -39,8 +39,6 @@ const Home = () => {
       console.log(url);
       console.log(response);
       
-      
-
       if (response.ok) {
         const data = await response.json();
         setCurrentTemp(data.temperature);
