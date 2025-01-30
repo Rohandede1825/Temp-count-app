@@ -18,7 +18,7 @@ const Login = () => {
         // Handle form submission
         try {
 
-            const backendUrl = "https://temp-app-backend.onrender.com/api/user/signup";
+            const backendUrl = "https://temp-app-backend.onrender.com/api/user/login";
 
             const response = await fetch(backendUrl,{ 
                 method: 'POST',
