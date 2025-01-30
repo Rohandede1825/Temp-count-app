@@ -33,7 +33,12 @@ const Home = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
       });
+
+
+      console.log(url);
       console.log(response);
+      
+      
     
 
 

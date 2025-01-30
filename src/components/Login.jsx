@@ -17,7 +17,10 @@ const Login = () => {
 
         // Handle form submission
         try {
-            const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/user/login`,{
+
+            const backendUrl = "https://temp-app-backend.onrender.com/api/user/signup";
+
+            const response = await fetch(backendUrl,{ 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
