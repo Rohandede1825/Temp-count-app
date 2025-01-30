@@ -28,16 +28,20 @@ const Home = () => {
     }
 
     try {
-      const backendUrl = "https://temp-app-backend.onrender.com/api/temp/add"
-      const response = await fetch(backendUrl, {
+      const url = "https://temp-app-backend.onrender.com/api/temp/add"
+      const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
       });
 
 
+      console.log(url);
+      console.log(response);
+      
+      
+
       if (response.ok) {
-        setLoading(true)
         const data = await response.json();
         setCurrentTemp(data.temperature);
         setTempLimit(data.tempLimit);
@@ -68,9 +72,8 @@ const Home = () => {
             placeholder='Set Temperature Limit'
             className='border border-gray-300 p-2 rounded w-full mb-4'
           />
-          <button disabled={loading} type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
-            {/* Add Temperature */}
-            {loading ? 'Adding Temperature...' : 'Add Temperature'}
+          <button type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
+            Add Temperature
           </button>
         </form>
       </motion.div>
