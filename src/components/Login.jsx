@@ -42,7 +42,9 @@ const Login = () => {
                 setError(data.message || 'Login failed');
                 return;
             }
-            alert('login succesfull')
+            // alert('login succesfull')
+
+            notifySuccess();
             naviate('/')
             setError(null);
         } catch (error) {
@@ -57,6 +59,19 @@ const Login = () => {
   const handleSignupRedirect = () => {
     naviate("/signup"); // Redirect to the signup page
   };
+
+   const notifySuccess = () => {
+      toast.success("Account Created Successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r bg-gray-200">
