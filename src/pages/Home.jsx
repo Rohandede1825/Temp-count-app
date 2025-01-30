@@ -37,6 +37,7 @@ const Home = () => {
 
 
       if (response.ok) {
+        setLoading(true)
         const data = await response.json();
         setCurrentTemp(data.temperature);
         setTempLimit(data.tempLimit);
