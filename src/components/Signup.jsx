@@ -24,16 +24,9 @@ const Signup = () => {
     setError(null);
 
     try {
-      const backendUrl = process.env.REACT_APP_PUBLIC_API;
+     
 
-        if (!backendUrl) {
-          console.error("Backend URL is not defined. Check your .env file.");
-          return;
-        }
-
-        console.log("Backend URL:", backendUrl); // Debugging
-
-        const response = await fetch(`${backendUrl}/api/user/signup`, {
+        const response = await fetch(`https://temp-app-backend.onrender.com/api/user/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
