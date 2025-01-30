@@ -48,6 +48,9 @@ const Login = () => {
         } catch (error) {
             setLoading(false);
         }
+        finally{
+          setLoading(false);
+        }
     }
   
 
@@ -93,10 +96,11 @@ const Login = () => {
             />
           </div>
           <button
+          disabled={loading}
             type="submit"
             className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
           >
-            Login
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
         <div className="mt-6 text-center">

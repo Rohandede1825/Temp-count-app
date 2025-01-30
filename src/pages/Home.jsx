@@ -7,6 +7,7 @@ const Home = () => {
   const [tempLimit, setTempLimit] = useState(30);
   const [currentTemp, setCurrentTemp] = useState(null);
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
   
 
   // Handle input change
@@ -22,6 +23,7 @@ const Home = () => {
   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!temperature) {
       alert('Please enter a temperature.');
       return;
@@ -48,6 +50,8 @@ const Home = () => {
       }
     } catch (error) {
       console.error('Error saving temperature:', error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -70,8 +74,8 @@ const Home = () => {
             placeholder='Set Temperature Limit'
             className='border border-gray-300 p-2 rounded w-full mb-4'
           />
-          <button type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
-            Add Temperature
+          <button disabled={loading} type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
+            {loading ? 'Adding Temperature...' : 'Add temperature'}
           </button>
         </form>
       </motion.div>
