@@ -20,12 +20,8 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
         setError(null)
-
-        // Handle form submission
         try {
-
             const backendUrl = "https://temp-app-backend.onrender.com/api/user/login";
-
             const response = await fetch(backendUrl,{ 
                 method: 'POST',
                 headers: {
@@ -38,13 +34,11 @@ const Login = () => {
             })
             
             const data = await response.json();
-
             if(!response.ok){
                 setError(data.message || 'Login failed');
                 return;
             }
             alert('login succesfull')
-
             notifySuccess();
             naviate('/')
             setError(null);
@@ -58,7 +52,7 @@ const Login = () => {
   
 
   const handleSignupRedirect = () => {
-    naviate("/signup"); // Redirect to the signup page
+    naviate("/signup"); 
   };
 
    const notifySuccess = () => {
@@ -114,7 +108,7 @@ const Login = () => {
           <button
           disabled={loading}
             type="submit"
-            className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+            className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
           >
             {loading ? "Loading..." : "Login"}
           </button>

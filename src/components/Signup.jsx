@@ -12,12 +12,12 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Handle input changes
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -34,7 +34,7 @@ const Signup = () => {
         body: JSON.stringify(formData),
       });
   
-      // Check response status
+   
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Signup failed due to server issue");
@@ -53,7 +53,7 @@ const Signup = () => {
     }
   };
   
-  // Success notification
+
   const notifySuccess = () => {
     toast.success("Account Created Successfully!", {
       position: "top-center",

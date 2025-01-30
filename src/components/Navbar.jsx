@@ -19,7 +19,7 @@ const Navbar = () => {
 
   const handleClickOutside = (e) => {
     if (!e.target.closest('.MenuOption') && !e.target.closest('.menu-icon')) {
-      setIsMenuOpen(false); // Hide the menu if clicking outside
+      setIsMenuOpen(false); 
     }
   };
   useEffect(() => {
@@ -75,7 +75,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile menu */}
+     
         <div className={`sm:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-gray-800 p-4 `}>
           <span onClick={handleClose} className='font-bold text-2xl cursor-pointer block  ml-72'><IoClose /></span>
 

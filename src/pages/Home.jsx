@@ -36,16 +36,12 @@ const Home = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
       });
-
-
-      console.log(url);
-      console.log(response);
-      
+  
       if (response.ok) {
         const data = await response.json();
         setCurrentTemp(data.temperature);
         setTempLimit(data.tempLimit);
-        setHistory(data.history.reverse()); // Use history from response
+        setHistory(data.history.reverse()); 
         setTemperature('');
       }
     } catch (error) {
@@ -74,7 +70,7 @@ const Home = () => {
             placeholder='Set Temperature Limit'
             className='border border-gray-300 p-2 rounded w-full mb-4'
           />
-          <button disabled={loading} type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
+          <button disabled={loading} type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-700'>
             {loading ? 'Adding Temperature...' : 'Add temperature'}
           </button>
         </form>
