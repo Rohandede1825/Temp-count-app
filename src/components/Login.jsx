@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom"
 
-import process from configDotenv();
-import { configDotenv } from "dotenv";
 
 const Login = () => {
     const naviate = useNavigate();
@@ -12,8 +10,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
 
     
-    
-
     const handleSubmit = async(event) => {
         event.preventDefault();
         setLoading(true);
