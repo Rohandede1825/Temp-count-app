@@ -7,6 +7,7 @@ const Home = () => {
   const [tempLimit, setTempLimit] = useState(30);
   const [currentTemp, setCurrentTemp] = useState(null);
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Handle input change
   const handleChange = (e) => {
@@ -27,19 +28,12 @@ const Home = () => {
     }
 
     try {
-      const url = "https://temp-app-backend.onrender.com/api/temp/add"
-      const response = await fetch(url, {
+      const backendUrl = "https://temp-app-backend.onrender.com/api/temp/add"
+      const response = await fetch(backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
       });
-
-
-      console.log(url);
-      console.log(response);
-      
-      
-    
 
 
       if (response.ok) {
@@ -73,8 +67,9 @@ const Home = () => {
             placeholder='Set Temperature Limit'
             className='border border-gray-300 p-2 rounded w-full mb-4'
           />
-          <button type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
-            Add Temperature
+          <button disabled={loading} type='submit' className='bg-gray-800 text-white px-4 py-2 rounded-lg'>
+            {/* Add Temperature */}
+            {loading ? 'Adding Temperature...' : 'Add Temperature'}
           </button>
         </form>
       </motion.div>
