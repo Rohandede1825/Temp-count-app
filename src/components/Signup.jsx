@@ -23,7 +23,7 @@ const Signup = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}}/api/user/signup`, {
+      const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
