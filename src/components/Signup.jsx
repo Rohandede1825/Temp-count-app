@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { configDotenv } from "dotenv";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,13 +23,14 @@ const Signup = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${process.env.URL}/api/user/signup`, {
+      const response = await fetch(`https://temp-app-backend.onrender.com/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+      
 
       const data = await response.json();
 

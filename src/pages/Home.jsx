@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { configDotenv } from 'dotenv';
 
 const Home = () => {
   const [temperature, setTemperature] = useState('');
@@ -26,12 +27,16 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.URL}/api/temp/add`, {
+      // const response = await fetch(`${process.env.PUBLIC_API}/api/temp/add` , {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ temperature, tempLimit })
+      // });
+      const response = await fetch(`${process.env.PUBLIC_API}/api/temp/add`,{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
-      });
-
+      })
       if (response.ok) {
         const data = await response.json();
         setCurrentTemp(data.temperature);
