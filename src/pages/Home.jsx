@@ -27,23 +27,13 @@ const Home = () => {
     }
 
     try {
-      // const response = await fetch(`${process.env.PUBLIC_API}/api/temp/add` , {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ temperature, tempLimit })
-      // });
-      // const response = await fetch(`${process.env.PUBLIC_API}/api/temp/add`,{
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ temperature, tempLimit })
-      // })
-
-      const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/temp/add`,{
+      const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/temp/add` , {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
+      });
+    
 
-      })
 
       if (response.ok) {
         const data = await response.json();
