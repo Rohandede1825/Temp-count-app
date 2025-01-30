@@ -27,7 +27,8 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch(`https://temp-app-backend.onrender.com/api/temp/add` , {
+      const url = "https://temp-app-backend.onrender.com/api/temp/add"
+      const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
