@@ -27,11 +27,12 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/temp/add` , {
+      const response = await fetch(`https://temp-app-backend.onrender.com/api/temp/add` , {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temperature, tempLimit })
       });
+      console.log(response);
     
 
 
