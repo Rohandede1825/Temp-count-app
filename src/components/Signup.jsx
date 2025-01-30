@@ -24,7 +24,7 @@ const Signup = () => {
     setError(null);
 
     try {
-      const backendUrl = process.env.REACT_APP_PUBLIC_API; // Ensure this is set in .env
+      const backendUrl = process.env.PUBLIC_API; // Ensure this is set in .env
       console.log("Backend URL:", backendUrl);
 
       if (!backendUrl) {
