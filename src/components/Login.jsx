@@ -18,7 +18,7 @@ const Login = () => {
 
         // Handle form submission
         try {
-            const response = await fetch(`${process.env.PUBLIC_API}/api/user/login`,{
+            const response = await fetch(`${process.env.REACT_APP_PUBLIC_API}/api/user/login`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,6 +28,7 @@ const Login = () => {
                     password: event.target.password.value
                 })
             })
+            
             const data = await response.json();
             if(!response.ok){
                 setError(data.message || 'Login failed');
