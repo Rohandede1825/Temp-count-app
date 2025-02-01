@@ -30,7 +30,6 @@ const App = () => {
         </Routes>
          
         <div className=''>
-
           <h1 className='bg-red-400 p-4 text-center text-2xl'>Temperature Data Visualization</h1>
           <FileUpload onDataFetched={setTemperatures} />
           {temperatures.length > 0 && <TemperatureChart temperatures={temperatures} />}

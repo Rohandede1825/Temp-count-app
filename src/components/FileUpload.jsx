@@ -20,7 +20,7 @@ const FileUpload = ({ onDataFetched }) => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/temperature/upload', formData, {
+      const response = await axios.post(`${REACT_APP_PUBLIC_API}/api/temperature/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -28,6 +28,7 @@ const FileUpload = ({ onDataFetched }) => {
     } catch (error) {
       setError('Error uploading file. Please try again.');
     }
+
   };
 
   return (
